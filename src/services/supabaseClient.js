@@ -8,47 +8,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const LOCAL_STORAGE_KEY = 'saubhagya_ishmeet_memories_v1';
 const TABLE_NAME = 'memories';
 
-export const DEFAULT_MEMORIES = [
-  {
-    id: 1,
-    title: "Our First Date & The Spark That Started It All",
-    date: "2023-10-14",
-    location: "Roastery Coffee House",
-    mood: "Magical",
-    story: "The moment we sat down across from each other, time seemed to stand still. Your smile lit up the entire café, and what felt like minutes turned into hours of endless laughter, deep conversations, and the unforgettable feeling that I had finally found my favorite person.",
-    author: "Saubhagya & Ishmeet",
-    category: "Coffee Date",
-    driveUrl: "https://drive.google.com",
-    envelopeColor: "#e8d5b0",
-    sealSymbol: "♡"
-  },
-  {
-    id: 2,
-    title: "Late Night Walks Under The Starlit Sky",
-    date: "2023-12-24",
-    location: "Central Park Promenade",
-    mood: "Romantic",
-    story: "Walking hand in hand through the cool night air, sharing dreams of our future together. With every step, I knew my heart would always belong with you. Every silence with you feels like a comfortable melody.",
-    author: "Ishmeet",
-    category: "Special Moment",
-    driveUrl: "https://drive.google.com",
-    envelopeColor: "#d4a373",
-    sealSymbol: "💖"
-  },
-  {
-    id: 3,
-    title: "Celebrating Our Anniversary & Golden Memories",
-    date: "2024-02-14",
-    location: "The Grand Rooftop Grill",
-    mood: "Unforgettable",
-    story: "Surrounded by fairy lights and soft jazz music, we toasted to another incredible year of loving each other. You looked absolutely breathtaking. Here's to forever and always, my love.",
-    author: "Saubhagya",
-    category: "Anniversary",
-    driveUrl: "https://drive.google.com",
-    envelopeColor: "#c98474",
-    sealSymbol: "🌹"
-  }
-];
+export const DEFAULT_MEMORIES = [];
 
 // Normalize row data from Supabase Table (snake_case or camelCase)
 function normalizeMemory(item) {
@@ -76,7 +36,7 @@ export async function getMemories() {
       .select('*')
       .order('id', { ascending: false });
 
-    if (!error && Array.isArray(data) && data.length > 0) {
+    if (!error && Array.isArray(data)) {
       const normalized = data.map(normalizeMemory);
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(normalized));
       return normalized;
@@ -91,13 +51,13 @@ export async function getMemories() {
   const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
   if (cached) {
     try {
-      return JSON.parse(cached);
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed)) return parsed;
     } catch (e) {
       console.error('Failed to parse cached memories:', e);
     }
   }
 
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DEFAULT_MEMORIES));
   return DEFAULT_MEMORIES;
 }
 
@@ -124,7 +84,6 @@ export async function saveMemory(newEntry) {
 
     if (error) {
       console.error('Error inserting row into Supabase memories table:', error);
-      // Fallback local save
       return await saveMemoryLocally(newEntry);
     }
     

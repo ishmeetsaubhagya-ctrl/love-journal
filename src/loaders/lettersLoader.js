@@ -7,14 +7,14 @@ export function getLoadedLetters() {
   if (cached) {
     try {
       const parsed = JSON.parse(cached);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         return parsed;
       }
     } catch (e) {
       console.error('Error reading cached letters:', e);
     }
   }
-  return DEFAULT_MEMORIES;
+  return DEFAULT_MEMORIES || [];
 }
 
 export const letters = getLoadedLetters();
