@@ -9,7 +9,7 @@ const FONT = "handwritten";
 
 const TEXT_TOP = "Every date, every smile, and every precious moment we have shared together.";
 const TEXT_BOTTOM = "In every life, in every universe, I would always choose you. ♡";
-const YOUR_NAME = "~ Saubhagya & Ishmeet ♡";
+const YOUR_NAME = "";
 
 const CLOSED_LETTER_TEXT_TOP_LINE =
     "❤️ To My Beloved ❤️";
