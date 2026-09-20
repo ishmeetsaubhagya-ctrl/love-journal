@@ -1,0 +1,66 @@
+{
+  "name": "moracarta",
+  "version": "2.1.4",
+  "type": "module",
+  "description": "",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "setup": "node src/commands/setup.js",
+    "dev": "vite --config vite.config.mjs",
+    "build": "vite build --config vite.config.mjs",
+    "preview": "vite preview --config vite.config.mjs",
+    "deploy": "node src/commands/deploy.js",
+    "add": "node src/commands/add.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "love letter",
+    "digital love letter",
+    "romantic website",
+    "love website",
+    "romantic",
+    "love",
+    "letter",
+    "valentines",
+    "valentines day",
+    "anniversary",
+    "romantic website template",
+    "website template",
+    "static website",
+    "npm",
+    "open source"
+  ],
+  "files": [
+    "index.html",
+    "vite.config.mjs",
+    "public",
+    "src/commands",
+    "src/config/fonts.js",
+    "src/content/letters.example.js",
+    "src/loaders/lettersLoader.js",
+    "src/scripts",
+    "src/services",
+    "src/styles",
+    "src/views"
+  ],
+  "postinstall": "node src/commands/postInstall.js",
+  "bin": {
+    "moracarta": "src/config/cliConfig.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WesleyHanauer/moracarta.git"
+  },
+  "author": "Wesley Hanauer",
+  "bugs": {
+    "url": "https://github.com/WesleyHanauer/moracarta/issues"
+  },
+  "homepage": "https://moracarta.pages.dev",
+  "dependencies": {
+    "@inquirer/prompts": "^8.6.0",
+    "@supabase/supabase-js": "^2.116.0",
+    "vite": "^8.2.2",
+    "wrangler": "^4.126.0"
+  }
+}

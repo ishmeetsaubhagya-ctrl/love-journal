@@ -1,0 +1,38 @@
+name: Handle issue assignment via comments
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  manage-assignment:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Process /assign or /unassign
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment.body.trim().toLowerCase();
+            const commenter = context.payload.comment.user.login;
+            const issueNumber = context.payload.issue.number;
+
+            const params = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              assignees: [commenter]
+            };
+
+            // Comando para atribuir
+            if (comment === '/assign') {
+              await github.rest.issues.addAssignees(params);
+              console.log(`Assigned issue #${issueNumber} to ${commenter}`);
+            } 
+            
+            // Comando para remover atribuição
+            else if (comment === '/unassign') {
+              await github.rest.issues.removeAssignees(params);
+              console.log(`Unassigned issue #${issueNumber} from ${commenter}`);
+            }

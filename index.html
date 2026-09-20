@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a0f12">
+  <title data-variable="TITLE">Saubhagya & Ishmeet — Our Love Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400;1,400&family=Montserrat:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+  <div class="app-background">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <header class="header">
+    <div class="couple-badge">
+      <span class="avatar">S</span>
+      <span class="heart-symbol">♡</span>
+      <span class="avatar">I</span>
+    </div>
+    
+    <h1 data-variable="TITLE">Saubhagya & Ishmeet</h1>
+    <div class="header-line"></div>
+    <p class="header-sub love-note" data-variable="TEXT_TOP"></p>
+
+    <!-- Action & Filter Bar -->
+    <div class="controls-wrap">
+      <div class="filter-top-row">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search memories, dates, locations, story..." aria-label="Search memories">
+        </div>
+        <div class="sort-dropdown-wrap">
+          <select id="sort-select" class="sort-select" aria-label="Sort memories">
+            <option value="date-desc">✨ Newest First</option>
+            <option value="date-asc">⏳ Oldest First</option>
+            <option value="title-asc">🔤 Title A - Z</option>
+            <option value="title-desc">🔤 Title Z - A</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="category-pills" id="category-pills">
+        <button class="pill active" data-category="ALL">All Memories</button>
+      </div>
+
+      <div class="add-btn-wrap">
+        <button class="btn-primary" id="open-create-modal-btn">
+          <span class="btn-icon">✦</span>
+          <span>Record New Moment</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Letter Envelopes Container -->
+    <div class="letter-list" id="letter-list">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Opening our vault of love memories...</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="bottom-text">
+    <div class="bottom-text-line"></div>
+    <p data-variable="TEXT_BOTTOM"></p>
+    <p class="signature" data-variable="YOUR_NAME"></p>
+  </div>
+
+
+
+  <!-- Create / Edit Memory Modal -->
+  <div class="modal-overlay" id="memory-modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title">Record A New Moment</h2>
+        <button class="close-modal-btn" id="close-memory-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      
+      <form id="memory-form" class="modal-body">
+        <input type="hidden" id="memory-id">
+        
+        <div class="form-group">
+          <label for="form-title">Memory Title *</label>
+          <input type="text" id="form-title" placeholder="e.g. Our Cozy Coffee Date at Roastery" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-date">Date *</label>
+            <input type="date" id="form-date" required>
+          </div>
+
+          <div class="form-group">
+            <label for="form-location">Location</label>
+            <input type="text" id="form-location" placeholder="e.g. Connaught Place, New Delhi">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-mood">Mood / Feeling</label>
+            <input type="text" id="form-mood" placeholder="e.g. Magical, Romantic, Cozy, Nostalgic...">
+          </div>
+
+          <div class="form-group">
+            <label for="form-category">Category</label>
+            <input type="text" id="form-category" placeholder="e.g. Coffee Date, Special Moment, Trip...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-author">Author / Written By</label>
+          <select id="form-author">
+            <option value="Saubhagya & Ishmeet">Saubhagya & Ishmeet</option>
+            <option value="Saubhagya">Saubhagya</option>
+            <option value="Ishmeet">Ishmeet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="form-color">Envelope Theme</label>
+          <div class="color-options">
+            <label class="color-swatch"><input type="radio" name="envelopeColor" value="#e8d5b0" checked><span style="background:#e8d5b0"></span>Vintage Gold</label>
+            <label class="color-swatch"><input type="radio" name="envelopeColor" value="#d4a373"><span style="background:#d4a373"></span>Rose Gold</label>
+            <label class="color-swatch"><input type="radio" name="envelopeColor" value="#c98474"><span style="background:#c98474"></span>Velvet Rose</label>
+            <label class="color-swatch"><input type="radio" name="envelopeColor" value="#8b5e83"><span style="background:#8b5e83"></span>Midnight Passion</label>
+            <label class="color-swatch"><input type="radio" name="envelopeColor" value="#6b8e23"><span style="background:#6b8e23"></span>Emerald Love</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-drive">Google Drive Link (Folder, Photo, or Video URL)</label>
+          <input type="url" id="form-drive" placeholder="https://drive.google.com/drive/folders/... or direct link">
+          <span class="input-hint">Attach your Google Drive photo album or video link to view together.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="form-story">Memory Story & Love Letter *</label>
+          <textarea id="form-story" rows="5" placeholder="Write your heartfelt message and memory details here..." required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancel-memory-btn">Cancel</button>
+          <button type="submit" class="btn-primary" id="save-memory-btn">Save Memory ♡</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="delete-modal" aria-hidden="true">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <h2>Delete Memory</h2>
+        <button class="close-modal-btn" id="close-delete-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete <strong id="delete-memory-title">this memory</strong>?</p>
+        <p class="warning-text">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="cancel-delete-btn">Keep Memory</button>
+        <button type="button" class="btn-danger" id="confirm-delete-btn">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/scripts/main.js"></script>
+  <script type="module" src="src/scripts/templateBinding.js"></script>
+</body>
+</html>

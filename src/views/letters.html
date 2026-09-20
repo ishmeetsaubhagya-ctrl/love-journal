@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a0f12">
+  <title>Letter — Saubhagya & Ishmeet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400;1,400&family=Montserrat:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/letters.css">
+</head>
+<body>
+  <canvas id="canvas-hearts"></canvas>
+
+  <div class="top-nav-bar">
+    <div class="back-link-wrap">
+      <a href="../../index.html" class="back-link">
+        <span class="back-link-arrow">&#8592;</span>
+        <span>Return to Journal</span>
+      </a>
+    </div>
+
+    <div class="letter-top-actions" id="letter-top-actions" style="display:none;">
+      <button class="action-btn edit-btn" id="detail-edit-btn">✏️ Edit Letter</button>
+      <button class="action-btn delete-btn" id="detail-delete-btn">🗑️ Delete Letter</button>
+    </div>
+  </div>
+
+  <div id="error-message" class="error" style="display:none"><p>Letter not found</p></div>
+
+  <div class="envelope-animation-wrap" id="envelope-wrap">
+    <div class="envelope-stage">
+      <div class="env-background"></div>
+
+      <div class="env-paper" id="paper">
+        <div class="paper-text">
+          <p data-variable="CLOSED_LETTER_TEXT_TOP_LINE"></p><br>
+          <p data-variable="CLOSED_LETTER_TEXT_BOTTOM_LINE"></p>
+        </div>
+      </div>
+
+      <div class="env-body-svg">
+        <svg viewBox="0 0 100 63" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="0,0 0,63 47,42" fill="#c9a87c" />
+          <polygon points="100,0 100,63 53,42" fill="#c4a07a" />
+          <polygon points="0,63 100,63 50,30" fill="#bfa06e" />
+        </svg>
+      </div>
+
+      <div class="env-flap" id="flap">
+        <svg viewBox="0 0 100 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="0,0 100,0 50,44" fill="#d4b896" />
+        </svg>
+      </div>
+
+      <div class="env-seal" id="seal"><span class="seal-heart" id="detail-seal-heart" aria-hidden="true">&#9825;</span></div>
+    </div>
+  </div>
+
+  <div class="letter-wrap" id="letter-wrap">
+    <div class="letter">
+      <div class="letter-corners">
+        <span class="letter-corner letter-corner-tl"></span>
+        <span class="letter-corner letter-corner-tr"></span>
+        <span class="letter-corner letter-corner-bl"></span>
+        <span class="letter-corner letter-corner-br"></span>
+      </div>
+
+      <div class="letter-top">
+        <div class="letter-meta-row">
+          <span class="letter-date" id="letter-date"></span>
+          <span class="letter-mood" id="letter-mood"></span>
+        </div>
+        <h1 class="letter-title" id="letter-title"></h1>
+        <div class="letter-location" id="letter-location"></div>
+      </div>
+
+      <div class="letter-divider"></div>
+
+      <div class="letter-body" id="letter-body"></div>
+
+      <!-- Google Drive & Media Attachment Section -->
+      <div class="drive-attachment-section" id="drive-attachment-section" style="display:none;">
+        <div class="drive-section-header">
+          <span class="drive-header-icon">📸</span>
+          <div class="drive-header-text">
+            <h4>Attached Photos, Videos & Memory Media</h4>
+            <p>Interactive preview of attached Google Drive content and media memories.</p>
+          </div>
+        </div>
+
+        <div class="drive-preview-container" id="drive-preview-container">
+          <!-- Dynamic embedded iframe or img/video preview will be inserted here -->
+        </div>
+
+        <div class="drive-footer-bar">
+          <a href="#" id="drive-link-btn" target="_blank" rel="noopener" class="btn-drive">
+            <span>Open Original Google Drive / Source ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="letter-footer">
+        <p class="letter-author" id="letter-author"></p>
+      </div>
+    </div>
+  </div>
+
+  <nav class="letter-nav" id="letter-nav">
+    <a id="nav-previous" class="nav-button invisible" href="#">&#8592; <p>Previous</p></a>
+    <span class="nav-counter" id="letter-counter"></span>
+    <a id="nav-next" class="nav-button invisible" href="#"><p>Next</p> &#8594;</a>
+  </nav>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="detail-delete-modal" aria-hidden="true">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <h2>Delete Memory</h2>
+        <button class="close-modal-btn" id="close-detail-delete-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this memory?</p>
+        <p class="warning-text">This action will permanently remove it from your journal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="cancel-detail-delete-btn">Keep Memory</button>
+        <button type="button" class="btn-danger" id="confirm-detail-delete-btn">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../scripts/lettersPage.js"></script>
+  <script type="module" src="../scripts/templateBinding.js"></script>
+</body>
+</html>
