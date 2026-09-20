@@ -94,24 +94,44 @@ function renderMediaPreview(url, container) {
   // 2. Google Drive Folder Link: /folders/FOLDER_ID
   const folderIdMatch = cleanUrl.match(/\/folders\/([a-zA-Z0-9_-]+)/);
 
-  // 3. Direct Image Extension
+  // 3. Dropbox Link
+  const isDropbox = cleanUrl.includes('dropbox.com');
+
+  // 4. Direct Image Extension
   const isDirectImage = /\.(png|jpe?g|gif|webp|svg)($|\?)/i.test(cleanUrl);
 
-  // 4. Direct Video Extension
-  const isDirectVideo = /\.(mp4|webm|mov)($|\?)/i.test(cleanUrl);
+  // 5. Direct Video Extension
+  const isDirectVideo = /\.(mp4|webm|mov|m4v)($|\?)/i.test(cleanUrl);
 
-  // 5. YouTube Link
+  // 6. YouTube Link
   const youtubeMatch = cleanUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([a-zA-Z0-9_-]{11})/);
+
+  // 7. Vimeo Link
+  const vimeoMatch = cleanUrl.match(/vimeo\.com\/(?:video\/)?([0-9]+)/);
 
   if (fileIdMatch) {
     const fileId = fileIdMatch[1];
+    const directImgUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+    const drivePreviewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+
+    const uniqueId = `gdrive_${fileId.replace(/[^a-zA-Z0-9]/g, '_')}`;
+
     container.innerHTML = `
-      <div class="media-frame-wrapper">
-        <iframe src="https://drive.google.com/file/d/${fileId}/preview" 
-                class="drive-iframe-preview" 
-                allow="autoplay; encrypted-media; picture-in-picture" 
-                allowfullscreen 
-                title="Google Drive Media Preview"></iframe>
+      <div class="media-preview-box">
+        <div class="media-image-wrapper" id="img_wrap_${uniqueId}">
+          <img src="${directImgUrl}" 
+               alt="Attached Memory Photo" 
+               class="drive-media-img" 
+               loading="lazy" 
+               onerror="this.onerror=null; var w=document.getElementById('img_wrap_${uniqueId}'); if(w) w.style.display='none'; var f=document.getElementById('iframe_wrap_${uniqueId}'); if(f) f.style.display='block';" />
+        </div>
+        <div class="media-frame-wrapper" id="iframe_wrap_${uniqueId}" style="display:none;">
+          <iframe src="${drivePreviewUrl}" 
+                  class="drive-iframe-preview" 
+                  allow="autoplay; encrypted-media; picture-in-picture" 
+                  allowfullscreen 
+                  title="Google Drive Media Preview"></iframe>
+        </div>
       </div>
     `;
   } else if (folderIdMatch) {
@@ -123,10 +143,25 @@ function renderMediaPreview(url, container) {
                 title="Google Drive Folder Preview"></iframe>
       </div>
     `;
+  } else if (isDropbox) {
+    const directDropboxUrl = cleanUrl.replace('dl=0', 'raw=1').replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+    if (isDirectVideo) {
+      container.innerHTML = `
+        <div class="media-video-wrapper">
+          <video src="${directDropboxUrl}" controls class="drive-media-video"></video>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="media-image-wrapper">
+          <img src="${directDropboxUrl}" alt="Attached Photo" class="drive-media-img" loading="lazy" />
+        </div>
+      `;
+    }
   } else if (isDirectImage) {
     container.innerHTML = `
       <div class="media-image-wrapper">
-        <img src="${cleanUrl}" alt="Attached Memory Media" class="drive-media-img" loading="lazy" />
+        <img src="${cleanUrl}" alt="Attached Memory Photo" class="drive-media-img" loading="lazy" />
       </div>
     `;
   } else if (isDirectVideo) {
@@ -144,6 +179,17 @@ function renderMediaPreview(url, container) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen 
                 title="YouTube Video Preview"></iframe>
+      </div>
+    `;
+  } else if (vimeoMatch) {
+    const videoId = vimeoMatch[1];
+    container.innerHTML = `
+      <div class="media-frame-wrapper">
+        <iframe src="https://player.vimeo.com/video/${videoId}" 
+                class="drive-iframe-preview" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                allowfullscreen 
+                title="Vimeo Video Preview"></iframe>
       </div>
     `;
   } else {
