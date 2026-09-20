@@ -902,3 +902,132 @@ body {
   position: relative;
   z-index: 1;
 }
+
+/* ==========================================================================
+   Mobile-First Responsiveness & Touch Optimization
+   ========================================================================== */
+
+@media (max-width: 540px) {
+  .header {
+    padding: 24px 16px 16px;
+  }
+
+  .header h1 {
+    font-size: clamp(24px, 6vw, 32px);
+  }
+
+  .love-note {
+    font-size: 15px;
+    padding: 8px 12px;
+    line-height: 1.6;
+  }
+
+  .main-content {
+    padding: 0 12px;
+  }
+
+  .filter-top-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sort-select {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .search-bar input {
+    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+    min-height: 44px;
+  }
+
+  .category-pills {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+
+  .pill {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    touch-action: manipulation;
+  }
+
+  .add-btn-wrap {
+    width: 100%;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+    font-size: 15px;
+  }
+
+  .envelope-actions {
+    top: -10px;
+    right: 8px;
+    gap: 4px;
+  }
+
+  .action-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .envelope-center {
+    padding: 14px 14px 16px;
+  }
+
+  .envelope-title {
+    font-size: clamp(16px, 4.5vw, 19px);
+  }
+
+  .envelope-snippet {
+    font-size: 12px;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-end;
+  }
+
+  .modal-card {
+    max-height: 92vh;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-header {
+    padding: 16px 18px;
+  }
+
+  .modal-body {
+    padding: 16px 18px;
+    gap: 14px;
+  }
+
+  .form-group input, .form-group select, .form-group textarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+    min-height: 44px;
+  }
+
+  .modal-footer {
+    padding: 14px 18px 18px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-footer button {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+}

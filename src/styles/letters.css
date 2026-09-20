@@ -617,3 +617,101 @@ body {
   font-family: var(--body-font);
   cursor: pointer;
 }
+
+/* ==========================================================================
+   Mobile-First Responsiveness & Touch Optimization for Letters Page
+   ========================================================================== */
+
+@media (max-width: 540px) {
+  .top-nav-bar {
+    padding: 12px 14px 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .back-link, .action-btn {
+    min-height: 40px;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+  }
+
+  .envelope-animation-wrap {
+    padding: 8vh 14px 0;
+    min-height: calc(100vh - 44px);
+  }
+
+  .envelope-stage {
+    aspect-ratio: 1 / 0.6;
+  }
+
+  .letter-wrap {
+    padding: 0 10px;
+    margin-top: 6px;
+  }
+
+  .letter {
+    padding: 18px 16px 24px;
+    border-radius: 12px;
+  }
+
+  .letter-title {
+    font-size: clamp(20px, 5.5vw, 26px);
+  }
+
+  .letter-body {
+    font-size: clamp(15px, 4.2vw, 17px);
+    line-height: 1.8;
+    text-align: left; /* Prevents awkward text-justification gaps on narrow mobile screens */
+  }
+
+  .drive-attachment-section {
+    padding: 14px 12px;
+    margin-top: 20px;
+    border-radius: 14px;
+  }
+
+  .drive-section-header {
+    gap: 10px;
+  }
+
+  .btn-drive {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .letter-nav {
+    padding: 0 10px;
+    margin-top: 16px;
+  }
+
+  .nav-button {
+    min-height: 44px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-end;
+  }
+
+  .modal-card {
+    border-radius: 20px 20px 0 0;
+    max-width: 100%;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-footer button {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
